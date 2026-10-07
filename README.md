@@ -4,10 +4,9 @@
 
 A Minecraft server plugin that gives each pair of friends a shared chest and lets friends teleport to each other without a request.
 
-- `/friend add <name>` sends a request. You become friends when the other player accepts.
-- Each pair of friends has one shared chest, opened from anywhere with `/friend chest <name>`. Both players see the same contents, even at the same time.
-- `/friend tp <name>` teleports you to a friend without asking.
-- Optionally charges each of the two players a fee through Vault when they become friends.
+- **Shared Chest**: Each pair of friends gets a dedicated shared chest opened with `/friend chest <player>` from anywhere. Both players see and edit the same contents in real time.
+- **Direct Teleport**: Teleport directly to a friend with `/friend tp <player>` without needing them to accept a request.
+- **Economy Support (Vault)**: Optionally charges each player a fee when they become friends.
 
 ## Requirements
 
@@ -17,46 +16,49 @@ A Minecraft server plugin that gives each pair of friends a shared chest and let
 
 ## Installation
 
-1. Download `friend-<version>.jar` from [Releases](https://github.com/spa77k/mc-friend/releases).
+1. Download `friend-1.0.1.jar` from [Releases](https://github.com/spa77k/mc-friend/releases).
 2. Put it in your server's `plugins/` folder.
-3. Restart the server. `plugins/Friend/config.yml` is created.
+3. Restart the server. `plugins/Friend/config.yml` is generated.
 
 ## Commands
 
-| Command | What it does |
+Base command: `/friend` (alias: `/friends`)
+
+| Command | Description |
 | --- | --- |
-| `/friend` | Show help |
-| `/friend add <name>` | Send a friend request. The player must be online |
-| `/friend accept [name]` | Accept a request. The name can be left out when there is only one |
-| `/friend deny [name]` | Deny a request |
-| `/friend list` | Show your friends (online or not) and your requests |
-| `/friend chest <name>` | Open the chest you share with that friend |
-| `/friend tp <name>` | Teleport to that friend |
-| `/friend remove <name>` | Remove a friend |
+| `/friend` | Show command help |
+| `/friend add <player>` | Send a friend request (target must be online; accepts if a request is already received) |
+| `/friend accept [player]` | Accept a friend request (player name can be omitted if there is only one request) |
+| `/friend deny [player]` | Deny a friend request (player name can be omitted if there is only one request) |
+| `/friend list` | Show your friends (online/offline status) and received friend requests |
+| `/friend chest <player>` | Open the chest you share with that friend |
+| `/friend tp <player>` | Teleport to that friend |
+| `/friend remove <player>` | Remove a friend (shared chest must be empty and closed) |
 
-### Requests and fees
+### Requests and Fees
 
-- Requests expire after `request-timeout` seconds, and are cleared when the server restarts.
-- If someone already sent you a request, `/friend add` back accepts it.
-- The fee is charged to each player when a request is accepted. If either player cannot pay, nothing happens and no money is taken.
+- Friend requests expire after `request-timeout` seconds and are cleared when the server restarts.
+- If someone already sent you a request, sending `/friend add <player>` back accepts it.
+- When a request is accepted, both players are charged the configured fee. If either player cannot afford it, the request is not accepted and no money is deducted.
 - Removing a friend is free and does not refund the fee.
 
-### Shared chest
+### Shared Chest
 
-- The contents are saved after every change and when the chest is closed.
-- A friend cannot be removed while the shared chest has items or is open, so removing a friend never deletes items.
+- Each pair of friends shares one chest, accessible from anywhere.
+- Both players can open and edit the chest at the same time. Contents are saved on every change and when the chest is closed.
+- A friend cannot be removed while the shared chest has items or is currently open, preventing item loss.
 
 ### Teleport
 
-- Stand still for `teleport-delay` seconds to teleport. Moving or taking damage cancels it.
-- The friend must be online. World access rules of other plugins still apply.
+- Stand still for `teleport-delay` seconds to teleport. Moving or taking damage cancels the teleport.
+- The target friend must be online.
 
 ## Permissions
 
 | Permission | Default | Description |
 | --- | --- | --- |
-| `friend.use` | everyone | Use all commands |
-| `friend.free` | nobody | Become friends without paying (only that player's share) |
+| `friend.use` | everyone | Use all `/friend` commands |
+| `friend.free` | nobody | Become friends without paying the fee (waives this player's fee only) |
 
 ## Configuration
 
@@ -64,29 +66,16 @@ A Minecraft server plugin that gives each pair of friends a shared chest and let
 
 | Key | Default | Description |
 | --- | --- | --- |
-| `language` | `en` | Message file to use (`messages_<language>.yml`). `en` and `ja` are bundled. |
-| `fee` | `500` | Paid by each of the two players when they become friends. `0` makes it free. Always free without Vault and an economy plugin. |
-| `max-friends` | `10` | Maximum friends per player. |
-| `request-timeout` | `300` | Seconds a request stays valid. |
-| `chest-rows` | `3` | Rows (1-6) of the shared chest. If you lower it, chests with items in removed rows can no longer be opened. |
-| `teleport-delay` | `3` | Seconds to stand still before teleporting. `0` teleports at once. |
+| `language` | `en` | Message file to use (`messages_<language>.yml`). Bundled: `en`, `ja`. |
+| `fee` | `500` | Fee paid by each of the two players when they become friends (`0` makes it free). Requires Vault and an economy plugin (always free without Vault/economy). |
+| `max-friends` | `10` | Maximum friends allowed per player. |
+| `request-timeout` | `300` | Seconds a friend request stays valid. |
+| `chest-rows` | `3` | Rows (1–6) of the shared chest (9–54 slots). If lowered, chests with items in removed rows can no longer be opened. |
+| `teleport-delay` | `3` | Seconds to stand still before teleporting (`0` teleports immediately). Moving or taking damage cancels. |
 
-All messages can be changed in `plugins/Friend/messages_<language>.yml`.
-
-Restart the server to apply changes.
-
-## Data
-
-Friends and shared chest contents are stored in `plugins/Friend/friends.db` (SQLite). Back it up with your worlds.
-Requests, new friendships and removals are logged as `Friend request: ...`, `Friends: ...` and `Friendship removed by ...`.
-
-## Build
-
-```bash
-mvn -B package
-```
-
-This creates `target/friend-<version>.jar`.
+- All messages can be customized in `plugins/Friend/messages_<language>.yml`.
+- Data is stored in SQLite database `plugins/Friend/friends.db`.
+- Restart the server to apply configuration changes.
 
 ## License
 
