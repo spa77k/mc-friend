@@ -28,7 +28,7 @@ def main():
         (SOURCE / PAPER, WORK / "paper.jar"),
         (SOURCE / "plugins/Vault.jar", plugins / "Vault.jar"),
         (SOURCE / "plugins/EssentialsX-2.22.0.jar", plugins / "EssentialsX.jar"),
-        (ROOT / "target/friend-1.0.0.jar", plugins / "Friend.jar"),
+        (ROOT / "target/friend-1.0.1.jar", plugins / "Friend.jar"),
     ):
         shutil.copy2(source, target)
     (plugins / "Friend/config.yml").write_text(
