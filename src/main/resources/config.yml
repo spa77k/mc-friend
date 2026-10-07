@@ -1,0 +1,20 @@
+# Friend configuration
+
+# Message language. Loads plugins/Friend/messages_<language>.yml (en and ja are bundled).
+language: en
+
+# Fee each of the two players pays when a friend request is accepted. Requires Vault and an economy plugin.
+# 0 makes it free. Without an economy plugin, it is always free. Removing a friend is free and refunds nothing.
+fee: 500
+
+# Maximum number of friends per player.
+max-friends: 10
+
+# Seconds a friend request stays valid.
+request-timeout: 300
+
+# Rows (1-6) of the chest shared by each pair of friends.
+chest-rows: 3
+
+# Seconds to stand still before /friend tp teleports. Moving or taking damage cancels it. 0 teleports at once.
+teleport-delay: 3

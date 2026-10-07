@@ -1,0 +1,21 @@
+name: Friend
+version: '${project.version}'
+main: io.github.spa77k.friend.FriendPlugin
+api-version: '1.20'
+description: Friends with a shared chest per pair and teleport without a request.
+website: https://github.com/spa77k/mc-friend
+softdepend: [Vault]
+
+commands:
+  friend:
+    description: Manage friends, open a shared chest, or teleport to a friend.
+    usage: /friend <add|accept|deny|remove|list|chest|tp> [player]
+    aliases: [friends]
+
+permissions:
+  friend.use:
+    description: Use friends, shared chests and friend teleport.
+    default: true
+  friend.free:
+    description: Become friends without paying the fee.
+    default: false
