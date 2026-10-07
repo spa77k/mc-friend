@@ -44,7 +44,7 @@ A Minecraft server plugin that gives each pair of friends a shared chest and let
 ### Shared chest
 
 - The contents are saved after every change and when the chest is closed.
-- A friend cannot be removed while the shared chest has items or is open, so nothing is lost or taken by one side.
+- A friend cannot be removed while the shared chest has items or is open, so removing a friend never deletes items.
 
 ### Teleport
 
