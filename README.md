@@ -11,7 +11,7 @@ A Minecraft server plugin that gives each pair of friends a shared chest and let
 
 ## Requirements
 
-- Spigot or Paper 1.20.4 or later (tested on Paper 1.20.4 and Paper 26.2)
+- Spigot or Paper 1.20.4 or later (tested on Paper 1.20.4, Paper 26.2 and Paper 26.3)
 - Java 17 or later (whatever your server version needs)
 - Optional: [Vault](https://github.com/MilkBowl/Vault) and an economy plugin (such as EssentialsX) to charge a fee
 

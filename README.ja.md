@@ -11,7 +11,7 @@
 
 ## 動作環境
 
-- Spigot または Paper 1.20.4 以降（Paper 1.20.4 と Paper 26.2 で動作確認）
+- Spigot または Paper 1.20.4 以降（Paper 1.20.4・26.2・26.3 で動作確認）
 - Java 17 以降（サーバーの版が求める版）
 - 任意: 手数料を取るなら [Vault](https://github.com/MilkBowl/Vault) と経済プラグイン（EssentialsXなど）
 
